@@ -1,0 +1,13 @@
+/**
+ * get element type
+ * @param {any} ele the target element
+ * @return {string} the element type 
+ */
+export const getType: (ele: any) => string = ele => {
+  if (typeof ele !== 'object') return typeof ele
+  if (!ele) return 'null' // fix typeof null === 'object' problem
+  const len = Object.prototype.toString.call(ele).length - 1
+  return Object.prototype.toString.call(ele).slice(8, len).toLowerCase()
+}
+
+export default getType
