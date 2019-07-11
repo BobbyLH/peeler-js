@@ -1,13 +1,15 @@
 {
   "name": "peeler-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The utils work for typescript and javascript",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "lint": "eslint --ext .ts src/",
-    "build": "npm run lint & npm run build_test && npm run build_rollup && npm run build_publish",
+    "build": "npm run lint & npm run build_test && npm run build_rollup && npm run build_copy && npm run build_publish",
     "build_test": "npm run test_build",
     "build_rollup": "rollup -c build/rollup.config.js",
+    "build_copy": "cp ./src/index.d.ts ./dist/index.d.ts",
     "build_publish": "./build/publish.sh",
     "test_build": "karma start --single-run & npm run test_node",
     "test_node": "nyc mocha --opts mocha.opts",
