@@ -19,5 +19,5 @@ cache:
   directories:
     - node_modules
 after_success:
-  - export CODECOV_TOKEN="1a09e5fe-aa3d-4bc7-9360-7e0818fd9461"
+  - export CODECOV_TOKEN="0b680ee0-cea5-45a1-a924-bccbf92fbbe5"
   - bash <(curl -s https://codecov.io/bash) -s coverage/

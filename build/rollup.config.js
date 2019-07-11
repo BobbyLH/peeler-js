@@ -2,38 +2,80 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import typescript from 'rollup-plugin-typescript'
+import typescript2 from 'rollup-plugin-typescript2'
+import { promisify } from 'util'
 import fs from 'fs'
 import path from 'path'
 import del from 'del'
 
-clearDir()
-
+const stat = promisify(fs.stat)
+const readdir = promisify(fs.readdir)
 async function clearDir () {
   await del.sync('dist/*')
 }
+async function createConfig () {
+  const extensions = ['.ts', '.js']
+  const filesPaths = []
+  const files = await readdir('src')
+  const len = files.length
+  for (let i = 0; i < len; i++) {
+    const file = files[i];
+    const filePath = path.resolve(__dirname, '../src', file)
+    const stats = await stat(filePath)
+    if (stats.isDirectory()) {
+      filesPaths.push({
+        entry: `${filePath}/index.ts`,
+        file: path.join(file, 'index.ts')
+      })
+    }
+  }
 
-const extensions = ['.ts', '.js']
-module.exports = {
-  input: 'src/index.js',
-  output: {
-    file: 'dist/index.js',
-    format: 'cjs',
-    compact: true
-  },
-  external: [
-    'base64-js'
-  ],
-  plugins: [
-    resolve({ extensions }),
-    commonjs(),
-    typescript({
-      target: 'es5',
-      lib: ["es5", "es6", "es2015", "es2016", "dom"]
-    }),
-    babel({
-      exclude: 'node_modules/**',
-      runtimeHelpers: true,
-      extensions
-    })
-  ]
+  return [{
+    input: 'src/index.ts',
+    output: {
+      file: 'dist/index.js',
+      format: 'cjs',
+      compact: true
+    },
+    plugins: [
+      resolve({ extensions }),
+      commonjs(),
+      typescript2({
+        tsconfigOverride: {
+          compilerOptions: {
+            module: 'es2015'
+          }
+        },
+        exclude: [ "**/__test__/*.test.ts" ]
+      }),
+      babel({
+        exclude: 'node_modules/**',
+        runtimeHelpers: true,
+        extensions
+      })
+    ]}, ...filesPaths.map(fileParams => {
+    const { entry, file } = fileParams
+    return {
+      input: entry,
+      output: {
+        file: `dist/${file}`,
+        format: 'cjs',
+        exports: 'named',
+        compact: true
+      },
+      plugins: [
+        resolve({ extensions }),
+        commonjs(),
+        typescript(),
+        babel({
+          exclude: 'node_modules/**',
+          runtimeHelpers: true,
+          extensions
+        })
+      ]
+    }
+  })]
 }
+
+clearDir()
+module.exports = createConfig()

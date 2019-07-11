@@ -13,6 +13,7 @@ babel.config.js
 yarn.lock
 _config.yml
 .nyc_output
+.rpt2_cache
 karma.conf.js
 .travis.yml
 coverage

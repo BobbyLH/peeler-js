@@ -3,3 +3,5 @@ dist/
 
 babel.config.js
 node_modules/
+
+src/**/__test__/*
