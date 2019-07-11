@@ -10,7 +10,7 @@ checkBranch () {
   fi
 }
 
-# checkBranch
+checkBranch
 
 if [ $? -eq 0 ]
 then
