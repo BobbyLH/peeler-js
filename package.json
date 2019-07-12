@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "lint": "eslint --ext .ts src/",
-    "publish": "npm run build && npm run build_publish",
+    "release": "npm run build && npm run build_publish",
     "build": "npm run lint && npm run build_test && npm run build_rollup && npm run build_copy",
     "build_test": "npm run test_build",
     "build_rollup": "rollup -c build/rollup.config.js",
