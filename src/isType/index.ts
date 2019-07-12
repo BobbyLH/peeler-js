@@ -2,6 +2,15 @@ interface AnyObject {
   [propsName: string]: any;
 }
 
+export interface IGeneratorFn extends GeneratorFunction {
+  readonly [Symbol.toStringTag]: 'GeneratorFunction';
+  (): IterableIterator<any>;
+}
+
+const gen = function * (): IterableIterator<void> {
+  yield
+}
+
 interface IsType {
   string: string;
   number: number;
@@ -14,6 +23,10 @@ interface IsType {
   regexp: RegExp;
   date: Date;
   function: Function;
+  promise: Promise<void>;
+  generatorfunction: GeneratorFunction;
+  generator: Generator;
+  asyncfunction: () => Promise<void>;
 }
 
 const typeMap: IsType = {
@@ -27,7 +40,11 @@ const typeMap: IsType = {
   object: {},
   regexp: /regexp/,
   date: new Date(),
-  function: function () {}
+  function: function () {},
+  promise: Promise.resolve(void(0)),
+  generatorfunction: gen as IGeneratorFn,
+  generator: gen(),
+  asyncfunction: async () => {}
 }
 
 /**

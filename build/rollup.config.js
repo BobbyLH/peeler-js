@@ -3,6 +3,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import typescript from 'rollup-plugin-typescript'
 import typescript2 from 'rollup-plugin-typescript2'
+import { uglify } from 'rollup-plugin-uglify'
 import { promisify } from 'util'
 import fs from 'fs'
 import path from 'path'
@@ -43,6 +44,7 @@ async function createConfig () {
       typescript2({
         tsconfigOverride: {
           compilerOptions: {
+            target: 'es5',
             module: 'es2015'
           }
         },
@@ -52,7 +54,8 @@ async function createConfig () {
         exclude: 'node_modules/**',
         runtimeHelpers: true,
         extensions
-      })
+      }),
+      uglify()
     ]}, ...filesPaths.map(fileParams => {
     const { entry, file } = fileParams
     return {
@@ -66,12 +69,15 @@ async function createConfig () {
       plugins: [
         resolve({ extensions }),
         commonjs(),
-        typescript(),
+        typescript({
+          target: 'es5'
+        }),
         babel({
           exclude: 'node_modules/**',
           runtimeHelpers: true,
           extensions
-        })
+        }),
+        uglify()
       ]
     }
   })]
