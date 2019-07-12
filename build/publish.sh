@@ -1,6 +1,7 @@
 #! /bin/bash
 
 iterate=$1
+name="[PEELER-JS]"
 
 checkBranch () {
   branch=$(git branch | grep \* | cut -d " " -f2)
@@ -21,22 +22,22 @@ updateVersion () {
 
   if [ "$iterate" = "i" -o "$iterate" = "ignore" ]
   then
-    echo "ignore version iteration"
+    echo "${name}: ignore version iteration"
   elif [ -z "$iterate" ]
   then
-    echo "auto version iteration"
+    echo "${name}: auto version iteration"
     newSubVersion=`expr $subVersion + 1`
     newVersion=$(echo ${version/${subVersion}/${newSubVersion}})
     newVersionLine=$(echo "${versionLine/${version}/${newVersion}}")
     sed -i "" "s/${versionLine}/${newVersionLine}/g" "package.json"
   elif [ -n "$manualVersion" ]
     then
-    echo "manual version iteration"
+    echo "${name}: manual version iteration"
     newVersion=$(echo ${version/${version}/${manualVersion}})
     newVersionLine=$(echo "${versionLine/${version}/${newVersion}}")
     sed -i "" "s/${versionLine}/${newVersionLine}/g" "package.json"
   else
-    echo "please input correct version number"
+    echo "${name}: please input correct version number"
   fi
 }
 
@@ -46,8 +47,6 @@ if [ $? -eq 0 ]
 then
   pkjV=$(grep \"version\" package.json)
   version=$(echo ${pkjV} | tr -cd "[0-9].")
-  name="[PEELER-JS]"
-  echo ${name}
   git add -A
   git commit -m "${name}: ${version}"
   git push
