@@ -1,6 +1,6 @@
 {
   "name": "peeler-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "The utils work for typescript and javascript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

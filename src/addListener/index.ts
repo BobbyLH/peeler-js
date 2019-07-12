@@ -1,14 +1,16 @@
+type ValueOf<T> = T[keyof T]
 interface ListenerOption {
   capture?: boolean;
   passive?: boolean;
   once?: boolean;
 }
 
+type AnyEvent = ValueOf<WindowEventMap>
 interface AnyEventListenerCallback {
-  (e: WindowEventMap): any;
+  (e: AnyEvent): any;
 }
 
-type EventListenerCallback = EventListenerOrEventListenerObject | AnyEventListenerCallback;
+type EventListenerCallback = AnyEventListenerCallback;
 type DOMType = Window | Document | HTMLElement;
 type AddListener = (event: string, fn: EventListenerCallback, dom: DOMType, option?: ListenerOption) => void;
 type AddListener_IE = (event: string, fn: EventListenerCallback, dom: DOMType) => void;
@@ -33,7 +35,7 @@ export const addListener: AddListener | AddListener_IE = (function () {
     const eventDOM = dom || window
     const { capture = false, passive = false, once = false } = option
 
-    eventDOM.addEventListener(event, fn as EventListenerOrEventListenerObject, {
+    eventDOM.addEventListener(event, fn, {
       capture,
       passive,
       once

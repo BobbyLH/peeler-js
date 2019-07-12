@@ -1,8 +1,10 @@
+type ValueOf<T> = T[keyof T]
+type AnyEvent = ValueOf<WindowEventMap>
 interface AnyEventListenerCallback {
-  (e: WindowEventMap): any;
+  (e: AnyEvent): any;
 }
 
-type EventListenerCallback = EventListenerOrEventListenerObject | AnyEventListenerCallback;
+type EventListenerCallback = AnyEventListenerCallback;
 type DOMType = Window | Document | HTMLElement;
 type RemoveListener = (event: string, fn: EventListenerCallback, dom: DOMType, useCapture?: boolean) => void;
 type RemoveListener_IE = (event: string, fn: EventListenerCallback, dom: DOMType) => void;
@@ -25,7 +27,7 @@ export const removeListener: RemoveListener | RemoveListener_IE = (function () {
 
   return function (event: string, fn: EventListenerCallback, dom: DOMType, useCapture: boolean = false): void {
     const eventDOM = dom || window
-    eventDOM.removeEventListener(event, fn as EventListenerOrEventListenerObject, useCapture)
+    eventDOM.removeEventListener(event, fn, useCapture)
   }
 })()
 
