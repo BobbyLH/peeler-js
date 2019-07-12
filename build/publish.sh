@@ -8,7 +8,7 @@ checkBranch () {
   if [ "$branch" != "master" ]
   then
     echo -e "\033[31m \n Only in master branch can be publish \n \033[0m"
-    exit
+    exit 1
   fi
 }
 
@@ -38,7 +38,7 @@ updateVersion () {
     sed -i "" "s/${versionLine}/${newVersionLine}/g" "package.json"
   else
     echo -e "\033[41;37m${name}: please input correct version number\033[0m"
-    exit
+    exit 1
   fi
 }
 
