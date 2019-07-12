@@ -22,22 +22,23 @@ updateVersion () {
 
   if [ "$iterate" = "i" -o "$iterate" = "ignore" ]
   then
-    echo "${name}: ignore version iteration"
+    echo -e "\033[33m${name}: ignore version iteration\033[0m"
   elif [ -z "$iterate" ]
   then
-    echo "${name}: auto version iteration"
+    echo -e "\033[36m${name}: auto version iteration\033[0m"
     newSubVersion=`expr $subVersion + 1`
     newVersion=$(echo ${version/${subVersion}/${newSubVersion}})
     newVersionLine=$(echo "${versionLine/${version}/${newVersion}}")
     sed -i "" "s/${versionLine}/${newVersionLine}/g" "package.json"
   elif [ -n "$manualVersion" ]
     then
-    echo "${name}: manual version iteration"
+    echo -e "\033[35m${name}: manual version iteration - ${manualVersion}\033[0m"
     newVersion=$(echo ${version/${version}/${manualVersion}})
     newVersionLine=$(echo "${versionLine/${version}/${newVersion}}")
     sed -i "" "s/${versionLine}/${newVersionLine}/g" "package.json"
   else
-    echo "${name}: please input correct version number"
+    echo -e "\033[41;37m${name}: please input correct version number\033[0m"
+    exit
   fi
 }
 
