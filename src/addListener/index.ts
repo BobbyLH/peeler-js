@@ -1,7 +1,11 @@
+interface EventReplenishment extends WindowEventMap, HTMLBodyElementEventMap, DocumentEventMap {
+  DOMContentLoaded: Event;
+}
+
 type PickOne<T, K extends keyof T> = T[K]
-type AnyEventName = keyof WindowEventMap;
-type EventListenerCallback<T extends AnyEventName> = (e: PickOne<WindowEventMap, T>) => any;
-type DOMType = Window | Document | HTMLElement;
+type AnyEventName = keyof EventReplenishment;
+type EventListenerCallback<T extends AnyEventName> = (e: PickOne<EventReplenishment, T>) => any;
+type DOMType = Window | Document | HTMLElement | Node | Element;
 
 interface ListenerOption {
   capture?: boolean;
