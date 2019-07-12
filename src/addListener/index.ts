@@ -4,9 +4,14 @@ interface ListenerOption {
   once?: boolean;
 }
 
+interface AnyEventListenerCallback {
+  (e: WindowEventMap): any;
+}
+
+type EventListenerCallback = EventListenerOrEventListenerObject | AnyEventListenerCallback;
 type DOMType = Window | Document | HTMLElement;
-type AddListener = (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType, option?: ListenerOption) => void;
-type AddListener_IE = (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType) => void;
+type AddListener = (event: string, fn: EventListenerCallback, dom: DOMType, option?: ListenerOption) => void;
+type AddListener_IE = (event: string, fn: EventListenerCallback, dom: DOMType) => void;
 
 /**
  * @param {string} event event name
@@ -18,17 +23,17 @@ export const addListener: AddListener | AddListener_IE = (function () {
   if (typeof window === 'undefined') return function (): void {}
 
   if (!window.addEventListener) {
-    return function (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType): void {
+    return function (event: string, fn: EventListenerCallback, dom: DOMType): void {
       const eventDOM: any = dom || window
       eventDOM.attachEvent(`on${event}`, fn)
     }
   }
 
-  return function (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType, option: ListenerOption = {}): void {
+  return function (event: string, fn: EventListenerCallback, dom: DOMType, option: ListenerOption = {}): void {
     const eventDOM = dom || window
     const { capture = false, passive = false, once = false } = option
 
-    eventDOM.addEventListener(event, fn, {
+    eventDOM.addEventListener(event, fn as EventListenerOrEventListenerObject, {
       capture,
       passive,
       once
