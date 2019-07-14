@@ -13,7 +13,15 @@ const stat = promisify(fs.stat)
 const readdir = promisify(fs.readdir)
 async function clearDir () {
   await del.sync('dist/*')
+  await del.sync('es/*')
 }
+
+function flatten (arr) {
+  return arr.reduce(function(prev, next){
+    return prev.concat(Array.isArray(next) ? flatten(next) : next)
+  }, [])
+}
+
 async function createConfig () {
   const extensions = ['.ts', '.js']
   const filesPaths = []
@@ -26,7 +34,7 @@ async function createConfig () {
     if (stats.isDirectory()) {
       filesPaths.push({
         entry: `${filePath}/index.ts`,
-        file: path.join(file, 'index.ts')
+        file: path.join(file, 'index.js')
       })
     }
   }
@@ -56,31 +64,67 @@ async function createConfig () {
         extensions
       }),
       uglify()
-    ]}, ...filesPaths.map(fileParams => {
-    const { entry, file } = fileParams
-    return {
-      input: entry,
+    ]}, {
+      input: 'src/index.ts',
       output: {
-        file: `dist/${file}`,
-        format: 'cjs',
-        exports: 'named',
+        file: 'es/index.js',
+        format: 'esm',
         compact: true
       },
       plugins: [
         resolve({ extensions }),
         commonjs(),
-        typescript({
-          target: 'es5'
-        }),
-        babel({
-          exclude: 'node_modules/**',
-          runtimeHelpers: true,
-          extensions
-        }),
-        uglify()
+        typescript2({
+          tsconfigOverride: {
+            compilerOptions: {
+              target: 'es6',
+              module: 'es2015'
+            }
+          },
+          exclude: [ "**/__test__/*.test.ts" ]
+        })
       ]
-    }
-  })]
+    }, ...flatten(filesPaths.map(fileParams => {
+      const { entry, file } = fileParams
+      return [{
+        input: entry,
+        output: {
+          file: `dist/${file}`,
+          format: 'cjs',
+          exports: 'named',
+          compact: true
+        },
+        plugins: [
+          resolve({ extensions }),
+          commonjs(),
+          typescript({
+            target: 'es5'
+          }),
+          babel({
+            exclude: 'node_modules/**',
+            runtimeHelpers: true,
+            extensions
+          }),
+          uglify()
+        ]
+      }, {
+        input: entry,
+        output: {
+          file: `es/${file}`,
+          format: 'esm',
+          compact: true
+        },
+        plugins: [
+          resolve({ extensions }),
+          commonjs(),
+          typescript({
+            target: 'es6',
+            module: 'es2015'
+          })
+        ]
+      }]
+    }))
+  ]
 }
 
 clearDir()
