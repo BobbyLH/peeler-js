@@ -77,7 +77,7 @@ async function createConfig () {
         typescript2({
           tsconfigOverride: {
             compilerOptions: {
-              target: 'es6',
+              target: 'es5',
               module: 'es2015'
             }
           },
@@ -118,7 +118,7 @@ async function createConfig () {
           resolve({ extensions }),
           commonjs(),
           typescript({
-            target: 'es6',
+            target: 'es5',
             module: 'es2015'
           })
         ]
