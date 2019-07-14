@@ -2,6 +2,7 @@
 
 iterate=$1
 name="[PEELER-JS]"
+dot="."
 
 checkBranch () {
   branch=$(git branch | grep \* | cut -d " " -f2)
@@ -17,17 +18,18 @@ checkBranch
 updateVersion () {
   versionLine=$(grep \"version\" package.json)
   version=$(echo ${versionLine} | tr -cd "[0-9].")
-  subVersion=$(echo ${version##*.})
+  prevSubVersion=$(echo ${version#*.})
+  subVersion=$(echo ${prevSubVersion%.*})
+  subSubVersion=$(echo ${version##*.})
   manualVersion=$(echo "$iterate" | grep [0-9]\.[0-9]\.[0-9])
-
   if [ "$iterate" = "i" -o "$iterate" = "ignore" ]
   then
     echo -e "\033[33m${name}: ignore version iteration\033[0m"
   elif [ -z "$iterate" ]
   then
     echo -e "\033[36m${name}: auto version iteration\033[0m"
-    newSubVersion=`expr $subVersion + 1`
-    newVersion=$(echo ${version/${subVersion}/${newSubVersion}})
+    newSubSubVersion=`expr $subSubVersion + 1`
+    newVersion=$(echo ${version/${dot}${subVersion}${dot}${subSubVersion}/${dot}${subVersion}${dot}${newSubSubVersion}})
     newVersionLine=$(echo "${versionLine/${version}/${newVersion}}")
     sed -i "" "s/${versionLine}/${newVersionLine}/g" "package.json"
   elif [ -n "$manualVersion" ]
