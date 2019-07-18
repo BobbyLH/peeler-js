@@ -61,6 +61,7 @@
     "node_modules/*",
     "build/*",
     "dist/*",
+    "es/*",
     "src/**/__test__/*.ts"
   ]
 }
