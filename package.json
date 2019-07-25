@@ -28,6 +28,9 @@
     "utils"
   ],
   "author": "bobby.li",
+  "contributors": [
+    "tedteddy"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.5.4",
