@@ -12,8 +12,8 @@ module.exports = {
       },
   },
   rules: {
-      "no-console": ["error", {
-          "allow": ["warn", "error", "info"]
+      "no-console": ["warn", {
+          "allow": ["log", "warn", "error", "info", "table"]
       }],
       "@typescript-eslint/restrict-plus-operands": "error",
       "@typescript-eslint/indent": ["warn", 2],

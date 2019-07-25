@@ -40,6 +40,9 @@ handle userAgent.
 #### isType()
 judgement element type.
 
+#### new Logger()
+Logger class.
+
 #### parseUrl()
 parse url.
 
