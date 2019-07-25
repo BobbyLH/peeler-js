@@ -31,6 +31,10 @@ describe("Logger's test module", function () {
     expect(logger_default).to.have.property('logLevel').to.be.a('number').to.be.equal(3)
     expect(logger_default).to.have.property('logPrefix').to.be.a('string').to.be.equal('Peeler-Js')
     expect(logger_default).to.have.property('__proto__').to.be.an('object').to.be.equal(proto)
+    expect(logger_default.log).to.be.an('function')
+    expect(logger_default.logErr).to.be.an('function')
+    expect(logger_default.logInfo).to.be.an('function')
+    expect(logger_default.logWarn).to.be.an('function')
   })
 
   it('const logger_cutstom = new Logger(config)', function () {
@@ -39,5 +43,9 @@ describe("Logger's test module", function () {
     expect(logger_cutstom).to.have.property('logLevel').to.be.a('number').to.be.equal(0)
     expect(logger_cutstom).to.have.property('logPrefix').to.be.a('string').to.be.equal('CUSTOM')
     expect(logger_cutstom).to.have.property('__proto__').to.be.an('object').to.be.equal(proto)
+    expect(logger_cutstom.log).to.be.an('function')
+    expect(logger_cutstom.logErr).to.be.an('function')
+    expect(logger_cutstom.logInfo).to.be.an('function')
+    expect(logger_cutstom.logWarn).to.be.an('function')
   })
 })
