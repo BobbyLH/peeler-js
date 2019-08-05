@@ -23,5 +23,9 @@ describe("getUA's test module", function () {
 
     expect(ua_mob_adr['isMobile']).to.be.true
     expect(ua_mob_adr['isAndroid']).to.be.true
+
+    expect(ua_mob_adr['isIphoneX']).to.be.false
+    expect(ua_mob_adr['isIPhoneXR']).to.be.false
+    expect(ua_mob_adr['isIPhoneXSMax']).to.be.false
   })
 })
