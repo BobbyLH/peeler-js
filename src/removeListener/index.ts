@@ -1,5 +1,7 @@
 interface EventReplenishment extends WindowEventMap, HTMLBodyElementEventMap, DocumentEventMap {
   DOMContentLoaded: Event;
+  progress: ProgressEvent;
+  readystatechange: ProgressEvent;
 }
 
 type PickOne<T, K extends keyof T> = T[K]
