@@ -40,7 +40,7 @@ handle userAgent.
 #### isType()
 judgement element type.
 
-#### listenKeyboard(dom, onRise, onFold)
+#### listenKeyboard(dom, onRise({isIOS, isAndroid}), onFold({isIOS, isAndroid}))
 mock listening keyboard rise or fold event for IOS and Android system.
 
 #### clearKeyboardListener
