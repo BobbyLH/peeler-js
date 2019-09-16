@@ -7,43 +7,43 @@ interface Iua {
  * @param {string} u navigator.userAgent
  * @return {false | Iua} ua object
  */
-export function getUA (u: ''): false;
-export function getUA (u: string): Iua;
-export function getUA (u: string): false | Iua {
+export function getUA(u: ''): false;
+export function getUA(u: string): Iua;
+export function getUA(u: string): false | Iua {
   if (!u) return false
 
-  function check (pattern: RegExp): boolean {
+  function check(pattern: RegExp): boolean {
     return (pattern).test(u)
   }
 
-  function parseIPhoneX (u: string): string {
+  function parseIPhoneX(u: string): string {
     let model = ''
     if (/(iPhone\/)?iPhone\s?X/.test(u)) { // 通过UA判断
-        model = 'iPhoneX'
+      model = 'iPhoneX'
     } else { // 浏览器中无法通过UA检测出iphonex系列
-        if (/iPhone/.test(u)) { // 通过ua加屏幕宽高判断
-            // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
-            // iPhone X      @3x 1125px × 2436px => 375px x 812px
-            // iPhone XS     @3x 1125px × 2436px => 375px x 812px
-            // iPhone XS Max @3x 1242px × 2688px => 414px x 896px
-            // iPhone XR     @2x 828px × 1792px  => 414px x 896px
-            // Portrait/Landscape
+      if (/iPhone/.test(u)) { // 通过ua加屏幕宽高判断
+        // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
+        // iPhone X      @3x 1125px × 2436px => 375px x 812px
+        // iPhone XS     @3x 1125px × 2436px => 375px x 812px
+        // iPhone XS Max @3x 1242px × 2688px => 414px x 896px
+        // iPhone XR     @2x 828px × 1792px  => 414px x 896px
+        // Portrait/Landscape
 
-            if (typeof screen !== 'undefined') {
-                const screenHeight = screen.height
-                const screenWidth = screen.width
-                if (screenHeight === 812 || screenWidth === 812) { // iPhoneX/iPhoneXS
-                    model = 'iPhoneX'
-                } else if (screenHeight === 896 || screenWidth === 896) { // iPhoneXR/iPhoneXSMax
-                    model = 'iPhoneXR'
-                    if (devicePixelRatio) {
-                        if (devicePixelRatio === 3) {
-                            model = 'iPhoneXSMax'
-                        }
-                    }
-                }
+        if (typeof screen !== 'undefined') {
+          const screenHeight = screen.height
+          const screenWidth = screen.width
+          if (screenHeight === 812 || screenWidth === 812) { // iPhoneX/iPhoneXS
+            model = 'iPhoneX'
+          } else if (screenHeight === 896 || screenWidth === 896) { // iPhoneXR/iPhoneXSMax
+            model = 'iPhoneXR'
+            if (devicePixelRatio) {
+              if (devicePixelRatio === 3) {
+                model = 'iPhoneXSMax'
+              }
             }
+          }
         }
+      }
     }
     return model
   }
@@ -61,7 +61,7 @@ export function getUA (u: string): false | Iua {
     isFirefox: check(/mozilla.*\Wfirefox\W/i),
     isGecko: check(/mozilla(?!.*webkit).*\Wgecko\W/i),
     is360se: check(/360/i),
-    isIE: (function() {
+    isIE: (function () {
       if (typeof window !== 'undefined' && navigator.appName === 'Microsoft Internet Explorer') {
         return true;
       } else if (check(/\bTrident\b/)) {
