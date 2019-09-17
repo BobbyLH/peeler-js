@@ -1,10 +1,10 @@
 import isType from '../isType';
 
-type TlogLevel = number;
-type TlogLevelStr = 'detail' | 'info' | 'warn' | 'error' | 'silent';
-type TlogMsg = string | Record<string, any> | Array<any>;
+export type TlogLevel = number;
+export type TlogLevelStr = 'detail' | 'info' | 'warn' | 'error' | 'silent';
+export type TlogMsg = string | Record<string, any> | Array<any>;
 
-interface Config {
+export interface Config {
   debug?: boolean;
   logLevel?: TlogLevelStr;
   logPrefix?: string;

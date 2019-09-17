@@ -7,9 +7,11 @@ export interface IGeneratorFn extends GeneratorFunction {
   (): IterableIterator<any>;
 }
 
-const gen = function * (): IterableIterator<void> {
+const gen = function *() {
   yield
 }
+let args: IArguments;
+(function () { args = arguments })();
 
 interface IsType {
   string: string;
@@ -19,6 +21,7 @@ interface IsType {
   undefined: undefined | void;
   symbol: symbol;
   array: any[];
+  arguments: IArguments;
   object: AnyObject;
   regexp: RegExp;
   date: Date;
@@ -37,6 +40,7 @@ const typeMap: IsType = {
   undefined: undefined,
   symbol: Symbol(1),
   array: [],
+  arguments: args,
   object: {},
   regexp: /regexp/,
   date: new Date(),
