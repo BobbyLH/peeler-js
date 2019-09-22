@@ -32,7 +32,7 @@ interface IinitStorage {
 }
 
 export const storage: Istorage | IinitStorage = (function () {
-  if(typeof window === 'undefined' || !window.sessionStorage || !window.localStorage) return {
+  if(typeof window === 'undefined') return {
     get: () => null,
     set: () => false,
     clear: () => false
@@ -43,6 +43,7 @@ export const storage: Istorage | IinitStorage = (function () {
       set (key, val) {
         let res
         try {
+          if (!window.sessionStorage) throw false;
           window.sessionStorage.setItem(key, val)
           res = true
         } catch (err) {
@@ -54,6 +55,7 @@ export const storage: Istorage | IinitStorage = (function () {
       get (key) {
         let res
         try {
+          if (!window.sessionStorage) throw false;
           res = window.sessionStorage.getItem(key)
         } catch (err) {
           res = null
@@ -64,6 +66,7 @@ export const storage: Istorage | IinitStorage = (function () {
       clear (key) {
         let res
         try {
+          if (!window.sessionStorage) throw false;
           window.sessionStorage.removeItem(key)
           res = true
         } catch (err) {
@@ -77,6 +80,7 @@ export const storage: Istorage | IinitStorage = (function () {
       set (key, val) {
         let res
         try {
+          if (!window.localStorage) throw false;
           window.localStorage.setItem(key, val)
           res = true
         } catch (err) {
@@ -88,6 +92,7 @@ export const storage: Istorage | IinitStorage = (function () {
       get (key) {
         let res
         try {
+          if (!window.localStorage) throw false;
           res = window.localStorage.getItem(key)
         } catch (err) {
           res = null
@@ -98,6 +103,7 @@ export const storage: Istorage | IinitStorage = (function () {
       clear (key) {
         let res
         try {
+          if (!window.localStorage) throw false;
           window.localStorage.removeItem(key)
           res = true
         } catch (err) {
