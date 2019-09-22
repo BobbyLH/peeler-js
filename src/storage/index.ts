@@ -123,7 +123,7 @@ export const storage: Istorage | IinitStorage = (function () {
             ts = new Date()
             ts.setTime(ts.getTime() + expires * 1000)
           }
-          document.cookie = `${key}=${val};domain=${domain};path=${path};expires=${ts ? ts.toUTCString() : ''};${secure ? 'secure' : ''}`
+          document.cookie = `${key}=${val};${domain ? `domain=${domain};` : ''}${path ? `path=${path};` : ''}${expires ? `expires=${ts ? ts.toUTCString() : ''};` : ''}${secure ? 'secure' : ''}`
           res = true
         } catch (err) {
           res = false
@@ -141,7 +141,7 @@ export const storage: Istorage | IinitStorage = (function () {
         return null
       },
       clear (key, domain) {
-        document.cookie = `${key}="";domain=${domain};max-age=-1`
+        document.cookie = `${key}="";${domain ? `domain=${domain};` : ''}max-age=-1`
         const res = handleStorage.cookie.get(key)
 
         return !res
