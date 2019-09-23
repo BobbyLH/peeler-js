@@ -32,7 +32,7 @@ export const parseUrl = (function () {
    */
   return function parse_url (url: string): IcacheItem {
     // All falsy values (as well as ".") should map to the current URL.
-    url = (!url || url == '.') ? location.href : url;
+    url = (!url || url === '.') ? location.href : url;
 
     if (cache[url]) return cache[url]
 
@@ -45,13 +45,13 @@ export const parseUrl = (function () {
     // like relative protocol URLs (e.g. "//google.com").
     // To workaround all of these issues, we reparse with the full URL from the
     // `href` property.
-    if (url.charAt(0) == '.' || url.charAt(0) == '/') return parse_url(a.href)
+    if (url.charAt(0) === '.' || url.charAt(0) === '/') return parse_url(a.href)
 
     // Don't include default ports.
     let port = (a.port == HTTP_PORT || a.port == HTTPS_PORT) ? '' : a.port
 
     // PhantomJS sets the port to "0" when using the file: protocol.
-    port = port == '0' ? '' : port
+    port = port === '0' ? '' : port
 
     // Sometimes IE incorrectly includes a port for default ports
     // (e.g. `:80` or `:443`) even when no port is specified in the URL.
@@ -63,7 +63,7 @@ export const parseUrl = (function () {
 
     // Sometimes IE doesn't include the leading slash for pathname.
     // http://bit.ly/1rQNoMg
-    const pathname = a.pathname.charAt(0) == '/' ? a.pathname : '/' + a.pathname
+    const pathname = a.pathname.charAt(0) === '/' ? a.pathname : '/' + a.pathname
 
     return cache[url] = {
       hash: a.hash,

@@ -21,7 +21,7 @@ interface Istorage {
   localStorage: IhandleStorage;
   cookie: IhandleStorage;
   get: (key: string, storeType?: storeType) => string | null;
-  set: (key: string, value: any, storeType?: storeType, option?: Ioption) => boolean;
+  set: (key: string, value: string, storeType?: storeType, option?: Ioption) => boolean;
   clear: (key: string, storeType?: storeType, domain?: string) => boolean;
 }
 
