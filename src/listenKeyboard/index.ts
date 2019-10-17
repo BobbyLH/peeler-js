@@ -4,14 +4,15 @@ import getUA from '../getUA';
 
 type AnyFn = () => any;
 type Listener = AnyFn | null;
-interface CbOption {
+export interface ListenerCallBackParams {
   isIOS: boolean;
   isAndroid: boolean;
 };
-type CbFn = (option: CbOption) => any;
+export type ListenerCallBack = (params: ListenerCallBackParams) => any;
+
 let listener_resize: Listener, listener_focus: Listener, listener_blur: Listener = null;
 
-export function listenKeyboard (node: HTMLInputElement | HTMLTextAreaElement, onRise?: CbFn, onFold?: CbFn) {
+export function listenKeyboard (node: HTMLInputElement | HTMLTextAreaElement, onRise?: ListenerCallBack, onFold?: ListenerCallBack) {
   if (typeof window === 'undefined') return;
 
   const { isAndroid, isIOS } = getUA(window.navigator.userAgent);
