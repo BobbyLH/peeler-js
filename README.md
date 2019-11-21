@@ -73,6 +73,6 @@ generate uuid.
 
 ## License
 
-Copyright (c) 2019-2019 Bobby.li
+Copyright (c) 2019 Bobby.li
 
 Released under the MIT License
