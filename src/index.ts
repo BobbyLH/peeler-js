@@ -9,7 +9,7 @@ export { getUA } from './getUA';
 export { isType } from './isType';
 export { listenKeyboard, clearKeyboardListener } from './listenKeyboard';
 export { Logger } from './logger';
-export { isNumberLike, toNumberLike } from './numberLike';
+export { isNumLike, numLikeToNum } from './numLike';
 export { parseUrl } from './parseUrl';
 export { preventEvent } from './preventEvent';
 export { removeListener } from './removeListener';

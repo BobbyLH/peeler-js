@@ -1,11 +1,11 @@
-function isNumberLike (value: any) {
+function isNumLike (value: any) {
   // exclude empty string
   if (typeof value === 'string' && value !== '0' && +value === 0) return false;
 
   return !isNaN('' + value as any);
 }
 
-function toNumberLike (value: any) {
+function numLikeToNum (value: any) {
   // exclude empty string
   if (typeof value === 'string' && value !== '0' && +value === 0) return value;
 
@@ -13,6 +13,6 @@ function toNumberLike (value: any) {
 }
 
 export {
-  isNumberLike,
-  toNumberLike
+  isNumLike,
+  numLikeToNum
 };
