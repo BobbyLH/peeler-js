@@ -2,14 +2,14 @@
  * @param {event} event event object
  */
 export const stopEvent: Function = (event: Event) => {
-  const e = event || (typeof window !== 'undefined' && window.event)
-  if (!e) return
+  const e = event || (typeof window !== 'undefined' && window.event);
+  if (!e) return;
 
   if (e && e.stopPropagation) {
-    e.stopPropagation()
+    e.stopPropagation();
   } else {
-    e.cancelBubble = true
+    e.cancelBubble = true;
   }
-}
+};
 
-export default stopEvent
+export default stopEvent;

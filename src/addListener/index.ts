@@ -22,25 +22,25 @@ interface ListenerOption {
  * @param {ListenerOption} option option contain captrue, passive, once
  */
 export const addListener = (function () {
-  if (typeof window === 'undefined') return function (): void {}
+  if (typeof window === 'undefined') return function (): void {};
 
   if (!window.addEventListener) {
     return function <T extends AnyEventName>(event: T, fn: EventListenerCallback<T>, dom: DOMType): void {
-      const eventDOM: any = dom || window
-      eventDOM.attachEvent(`on${event}`, fn)
-    }
+      const eventDOM: any = dom || window;
+      eventDOM.attachEvent(`on${event}`, fn);
+    };
   }
 
   return function <T extends AnyEventName>(event: T, fn: EventListenerCallback<T>, dom: DOMType, option: ListenerOption = {}): void {
-    const eventDOM = dom || window
-    const { capture = false, passive = false, once = false } = option
+    const eventDOM = dom || window;
+    const { capture = false, passive = false, once = false } = option;
 
     eventDOM.addEventListener(event, fn as EventListenerOrEventListenerObject, {
       capture,
       passive,
       once
-    })
-  }
-})()
+    });
+  };
+})();
 
-export default addListener
+export default addListener;

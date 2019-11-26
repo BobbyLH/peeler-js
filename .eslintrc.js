@@ -19,6 +19,8 @@ module.exports = {
       "@typescript-eslint/indent": ["warn", 2],
       "linebreak-style": ["warn", "unix"],
       "quotes": ["error", "single"],
+      "semi": ["error", "always"],
+      "no-extra-semi": ["warn"],
       "@typescript-eslint/camelcase": ["off"],
       "@typescript-eslint/restrict-plus-operands": ["off"],
       "@typescript-eslint/array-type": ["off"],

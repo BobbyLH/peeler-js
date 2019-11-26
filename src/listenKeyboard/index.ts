@@ -7,7 +7,7 @@ type Listener = AnyFn | null;
 export interface ListenerCallBackParams {
   isIOS: boolean;
   isAndroid: boolean;
-};
+}
 export type ListenerCallBack = (params: ListenerCallBackParams) => any;
 
 let listener_resize: Listener, listener_focus: Listener, listener_blur: Listener = null;
@@ -36,7 +36,7 @@ export function listenKeyboard (node: HTMLInputElement | HTMLTextAreaElement, on
       originHeight = resizeHeight;
     };
 
-    addListener('resize', listener_resize, window)
+    addListener('resize', listener_resize, window);
   }
 
   if (isIOS) {
@@ -52,7 +52,7 @@ export function listenKeyboard (node: HTMLInputElement | HTMLTextAreaElement, on
     };
     addListener('blur', listener_blur, node);
   }
-};
+}
 
 export function clearKeyboardListener (node: HTMLInputElement | HTMLTextAreaElement) {
   if (typeof window === 'undefined') return;
@@ -60,7 +60,7 @@ export function clearKeyboardListener (node: HTMLInputElement | HTMLTextAreaElem
   const { isAndroid, isIOS } = getUA(window.navigator.userAgent);
 
   if (isAndroid && listener_resize) {
-    removeListener('resize', listener_resize, window)
+    removeListener('resize', listener_resize, window);
   }
 
   if (isIOS && listener_focus && listener_blur) {

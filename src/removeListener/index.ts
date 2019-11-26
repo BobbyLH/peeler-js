@@ -16,19 +16,19 @@ type DOMType = Window | Document | HTMLElement | Node | Element;
  * @param {boolean} useCapture bubble or capture
  */
 export const removeListener = (function () {
-  if (typeof window === 'undefined') return function (): void {}
+  if (typeof window === 'undefined') return function (): void {};
 
   if (!window.removeEventListener) {
     return function <T extends AnyEventName>(event: string, fn: EventListenerCallback<T>, dom: DOMType): void {
-      const eventDOM: any = dom || window
-      eventDOM.detachEvent(`on${event}`, fn)
-    }
+      const eventDOM: any = dom || window;
+      eventDOM.detachEvent(`on${event}`, fn);
+    };
   }
 
   return function <T extends AnyEventName>(event: string, fn: EventListenerCallback<T>, dom: DOMType, useCapture: boolean = false): void {
-    const eventDOM = dom || window
-    eventDOM.removeEventListener(event, fn as EventListenerOrEventListenerObject, useCapture)
-  }
-})()
+    const eventDOM = dom || window;
+    eventDOM.removeEventListener(event, fn as EventListenerOrEventListenerObject, useCapture);
+  };
+})();
 
-export default removeListener
+export default removeListener;

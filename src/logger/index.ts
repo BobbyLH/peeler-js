@@ -36,9 +36,9 @@ export class Logger {
    * @return {void}
    */
   public log (detail: TlogMsg): void {
-    const canLog: boolean = this.logLevel !== logLevelSet['silent'] && this.logLevel === logLevelSet['detail']
+    const canLog: boolean = this.logLevel !== logLevelSet['silent'] && this.logLevel === logLevelSet['detail'];
 
-    this.debug && canLog && this._logOptimize(detail, 'log')
+    this.debug && canLog && this._logOptimize(detail, 'log');
   }
 
   /**
@@ -48,9 +48,9 @@ export class Logger {
    * @return {void}
    */
   public logInfo (info: TlogMsg): void {
-    const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'] && this.logLevel !== logLevelSet['warn']
+    const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'] && this.logLevel !== logLevelSet['warn'];
 
-    this.debug && canLog && this._logOptimize(info, 'info')
+    this.debug && canLog && this._logOptimize(info, 'info');
   }
 
   /**
@@ -60,9 +60,9 @@ export class Logger {
    * @return {void}
    */
   public logWarn (warn: TlogMsg): void {
-    const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error']
+    const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'];
 
-    this.debug && canLog && this._logOptimize(warn, 'warn')
+    this.debug && canLog && this._logOptimize(warn, 'warn');
   }
 
   /**
@@ -72,9 +72,9 @@ export class Logger {
    * @return {void}
    */
   public logErr (error: TlogMsg): void {
-    const canLog = this.logLevel !== logLevelSet['silent']
+    const canLog = this.logLevel !== logLevelSet['silent'];
 
-    this.debug && canLog && this._logOptimize(error, 'error')
+    this.debug && canLog && this._logOptimize(error, 'error');
   }
 
   /**
@@ -85,17 +85,17 @@ export class Logger {
    * @return {void}
    */
   private _logOptimize (msg: TlogMsg, method: 'log' | 'info' | 'warn' | 'error'): void {
-    const logger: Function = console[method] || console.log
-    const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`
+    const logger: Function = console[method] || console.log;
+    const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`;
 
     if ((isType('object')(msg) || isType('array')(msg)) && console.table) {
-      logger(prefix)
-      console.table(msg)
-      return
+      logger(prefix);
+      console.table(msg);
+      return;
     }
 
-    logger(prefix, msg)
+    logger(prefix, msg);
   }
 }
 
-export default Logger
+export default Logger;

@@ -8,10 +8,10 @@ export interface IGeneratorFn extends GeneratorFunction {
 }
 
 const gen = function *() {
-  yield
-}
+  yield;
+};
 let args: IArguments;
-(function () { args = arguments })();
+(function () { args = arguments; })();
 
 interface IsType {
   string: string;
@@ -49,7 +49,7 @@ const typeMap: IsType = {
   generatorfunction: gen as IGeneratorFn,
   generator: gen(),
   asyncfunction: async () => {}
-}
+};
 
 /**
  * judgement ele type
@@ -58,11 +58,11 @@ const typeMap: IsType = {
  * @return {boolean} whether or not ele pair with type
  */
 export function isType <T extends keyof IsType>(type: T) {
-  const typeInstance = typeMap[type]
+  const typeInstance = typeMap[type];
   return function (ele: any): ele is typeof typeInstance {
-    if (typeof ele !== 'object') return typeof ele === type.toLowerCase()
-    const len = Object.prototype.toString.call(ele).length - 1
-    return Object.prototype.toString.call(ele).slice(8, len).toLowerCase() === type.toLowerCase()
-  }
+    if (typeof ele !== 'object') return typeof ele === type.toLowerCase();
+    const len = Object.prototype.toString.call(ele).length - 1;
+    return Object.prototype.toString.call(ele).slice(8, len).toLowerCase() === type.toLowerCase();
+  };
 }
-export default isType
+export default isType;

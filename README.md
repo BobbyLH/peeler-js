@@ -49,6 +49,12 @@ clear listening keyboard event.
 #### new Logger()
 Logger class.
 
+#### isNumberLike()
+judgement whether or not number-like value.
+
+#### toNumberLike()
+transform number-like value to number value.
+
 #### parseUrl()
 parse url.
 

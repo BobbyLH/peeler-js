@@ -1,18 +1,19 @@
-export { addListener } from './addListener'
-export { clipboard } from './clipboard'
-export { compare } from './compare'
-export { compatCheck } from './compatCheck'
-export { getCookie } from './getCookie'
-export { getTs } from './getTs'
-export { getType } from './getType'
-export { getUA } from './getUA'
-export { isType } from './isType'
-export { listenKeyboard, clearKeyboardListener } from './listenKeyboard'
-export { Logger } from './logger'
-export { parseUrl } from './parseUrl'
-export { preventEvent } from './preventEvent'
-export { removeListener } from './removeListener'
-export { stopEvent } from './stopEvent'
-export { storage } from './storage'
-export { timeslice } from './timeslice'
-export { uuid } from './uuid'
+export { addListener } from './addListener';
+export { clipboard } from './clipboard';
+export { compare } from './compare';
+export { compatCheck } from './compatCheck';
+export { getCookie } from './getCookie';
+export { getTs } from './getTs';
+export { getType } from './getType';
+export { getUA } from './getUA';
+export { isType } from './isType';
+export { listenKeyboard, clearKeyboardListener } from './listenKeyboard';
+export { Logger } from './logger';
+export { isNumberLike, toNumberLike } from './numberLike';
+export { parseUrl } from './parseUrl';
+export { preventEvent } from './preventEvent';
+export { removeListener } from './removeListener';
+export { stopEvent } from './stopEvent';
+export { storage } from './storage';
+export { timeslice } from './timeslice';
+export { uuid } from './uuid';

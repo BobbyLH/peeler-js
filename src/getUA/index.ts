@@ -10,16 +10,16 @@ interface Iua {
 export function getUA(u: ''): false;
 export function getUA(u: string): Iua;
 export function getUA(u: string): false | Iua {
-  if (!u) return false
+  if (!u) return false;
 
   function check(pattern: RegExp): boolean {
-    return (pattern).test(u)
+    return (pattern).test(u);
   }
 
   function parseIPhoneX(u: string): string {
-    let model = ''
+    let model = '';
     if (/(iPhone\/)?iPhone\s?X/.test(u)) { // 通过UA判断
-      model = 'iPhoneX'
+      model = 'iPhoneX';
     } else { // 浏览器中无法通过UA检测出iphonex系列
       if (/iPhone/.test(u)) { // 通过ua加屏幕宽高判断
         // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/adaptivity-and-layout/
@@ -30,22 +30,22 @@ export function getUA(u: string): false | Iua {
         // Portrait/Landscape
 
         if (typeof screen !== 'undefined') {
-          const screenHeight = screen.height
-          const screenWidth = screen.width
+          const screenHeight = screen.height;
+          const screenWidth = screen.width;
           if (screenHeight === 812 || screenWidth === 812) { // iPhoneX/iPhoneXS
-            model = 'iPhoneX'
+            model = 'iPhoneX';
           } else if (screenHeight === 896 || screenWidth === 896) { // iPhoneXR/iPhoneXSMax
-            model = 'iPhoneXR'
+            model = 'iPhoneXR';
             if (devicePixelRatio) {
               if (devicePixelRatio === 3) {
-                model = 'iPhoneXSMax'
+                model = 'iPhoneXSMax';
               }
             }
           }
         }
       }
     }
-    return model
+    return model;
   }
 
   const UA: Iua = {
@@ -90,9 +90,9 @@ export function getUA(u: string): false | Iua {
     isIphoneX: parseIPhoneX(u) == 'iPhoneX' ? true : false,
     isIPhoneXR: parseIPhoneX(u) == 'iPhoneXR' ? true : false,
     isIPhoneXSMax: parseIPhoneX(u) == 'iPhoneXSMax' ? true : false,
-  }
+  };
 
-  return UA
+  return UA;
 }
 
-export default getUA
+export default getUA;
