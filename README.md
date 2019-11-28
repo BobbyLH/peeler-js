@@ -13,67 +13,87 @@
 
 
 ## APIs
-#### addListener(event, fn, dom option?)
+### addListener(event, fn, dom option?)
 compat addEventListener and attachEvent.
 
-#### clipboard()
+### clipboard()
 copy text.
 
-#### compare()
+### compare()
 compare any element.
 
-#### compatCheck()
+### compatCheck()
 compat check.
 
-#### getCookie()
+### getCookie()
 get cookie.
 
-#### getTs()
+### getTs()
 compat timestamp.
 
-#### getType()
+### getType()
 get element type.
 
-#### getUA()
+### getUA()
 handle userAgent.
 
-#### isType()
+### isType()
 judgement element type.
 
-#### listenKeyboard(dom, onRise({isIOS, isAndroid}), onFold({isIOS, isAndroid}))
+### listenKeyboard(dom, onRise({isIOS, isAndroid}), onFold({isIOS, isAndroid}))
 mock listening keyboard rise or fold event for IOS and Android system.
 
-#### clearKeyboardListener
+### clearKeyboardListener(dom)
 clear listening keyboard event.
 
-#### new Logger()
+### new Logger()
 Logger class.
 
-#### isNumLike()
+### isNumLike()
 judgement whether or not number-like value.
 
-#### numLikeToNum()
+### numLikeToNum()
 transform number-like value to number value.
 
-#### parseUrl()
+### parseUrl()
 parse url.
 
-#### preventEvent()
+### preventEvent()
 compat prevent event.
 
-#### removeListener()
+### removeListener()
 compat removeEventListener and detachEvent.
 
-#### stopEvent()
+### stopEvent()
 compat stop event.
 
-#### storage()
+### storage()
 handle cookie localstorge sessionstorage.
 
-#### timeslice()
+### rules
+some rules(below) for string or number validate.
+#### phone
+#### numeral
+#### number
+#### integer
+#### decimal
+#### color_hex
+#### url
+#### chinese
+#### include_chinese
+#### ascii
+#### zipcode
+#### ip4
+#### notempty
+#### picture
+#### rar
+#### date
+#### letter
+
+### timeslice()
 timeslice.
 
-#### uuid()
+### uuid()
 generate uuid.
 
 
