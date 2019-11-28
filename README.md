@@ -72,23 +72,23 @@ handle cookie localstorge sessionstorage.
 
 ### rules
 some rules(below) for string or number validate.
-#### phone
-#### numeral
-#### number
-#### integer
-#### decimal
-#### color_hex
-#### url
-#### chinese
-#### include_chinese
-#### ascii
-#### zipcode
-#### ip4
-#### notempty
-#### picture
-#### rar
-#### date
-#### letter
+#### phone(val)
+#### numeral(val, digit)
+#### number(val, sign?)
+#### integer(val, sign?)
+#### decimal(val, sign?)
+#### color_hex(val)
+#### url(val)
+#### chinese(val)
+#### include_chinese(val)
+#### ascii(val)
+#### zipcode(val)
+#### ip4(val)
+#### notempty(val)
+#### picture(val)
+#### rar(val)
+#### date(val)
+#### letter(val, capital?)
 
 ### timeslice()
 timeslice.
