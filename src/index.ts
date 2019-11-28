@@ -15,5 +15,6 @@ export { preventEvent } from './preventEvent';
 export { removeListener } from './removeListener';
 export { stopEvent } from './stopEvent';
 export { storage } from './storage';
+export { rules } from './rules';
 export { timeslice } from './timeslice';
 export { uuid } from './uuid';
