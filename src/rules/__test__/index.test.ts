@@ -2,7 +2,7 @@ import 'mocha'
 import { expect } from 'chai'
 import rules from '../';
 const {
-  phone,
+  phone_cn,
   numeral,
   number,
   integer,
@@ -23,7 +23,7 @@ const {
 
 describe("rules' test module", function () {
   it('all export are function', function () {
-    expect(phone).to.be.a('function');
+    expect(phone_cn).to.be.a('function');
     expect(numeral).to.be.a('function');
     expect(number).to.be.a('function');
     expect(integer).to.be.a('function');
@@ -42,18 +42,18 @@ describe("rules' test module", function () {
     expect(letter).to.be.a('function');
   });
 
-  it("phone's test module", function () {
-    expect(phone(13448932726)).to.be.true;
-    expect(phone('13448932726')).to.be.true;
-    expect(phone(12345678901)).to.be.false;
-    expect(phone('12345678901')).to.be.false;
-    expect(phone('    ')).to.be.false;
-    expect(phone('0')).to.be.false;
-    expect(phone(0)).to.be.false;
-    expect(phone('123')).to.be.false;
-    expect(phone(555)).to.be.false;
-    expect(phone('xiachedan555')).to.be.false;
-    expect(phone('瞎扯蛋')).to.be.false;
+  it("phone_cn's test module", function () {
+    expect(phone_cn(13448932726)).to.be.true;
+    expect(phone_cn('13448932726')).to.be.true;
+    expect(phone_cn(12345678901)).to.be.false;
+    expect(phone_cn('12345678901')).to.be.false;
+    expect(phone_cn('    ')).to.be.false;
+    expect(phone_cn('0')).to.be.false;
+    expect(phone_cn(0)).to.be.false;
+    expect(phone_cn('123')).to.be.false;
+    expect(phone_cn(555)).to.be.false;
+    expect(phone_cn('xiachedan555')).to.be.false;
+    expect(phone_cn('瞎扯蛋')).to.be.false;
   });
 
   it("numeral's test module", function () {

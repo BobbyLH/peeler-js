@@ -1,6 +1,6 @@
 const regExpCollection = {
   /* eslint-disable no-useless-escape */
-  phone: /^(1([3|8][0-9]|[4][57]|[5][012356789]|[7][0-9]))[0-9]{8}$/, // chinese phone number
+  phone_cn: /^(1([3|4|5|6|7|8|9][0-9]))[0-9]{8}$/, // chinese phone number
   mail: /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/,
   numeral: (digit: number) => new RegExp(`^\\d{${digit}}$`),
   integer: /^-?[1-9]\d*$/, // interger
@@ -42,7 +42,7 @@ function validate (regName: Exclude<keyof typeof regExpCollection, 'numeral'>) {
 }
 
 export const rules = {
-  phone: validate('phone'),
+  phone_cn: validate('phone_cn'),
   numeral: function (str: string | number, digit: number) {
     return regExpCollection.numeral(digit).test('' + str);
   },
