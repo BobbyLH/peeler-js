@@ -11,6 +11,7 @@ describe("handleStr's test module", function () {
   });
 
   it('call firstLetter without any options will return a first letter string', function () {
+    expect(firstLetter('')).to.be.equal('');
     expect(firstLetter('first')).to.be.equal('f');
   });
   it('call firstLetter with some options', function () {
@@ -26,6 +27,7 @@ describe("handleStr's test module", function () {
   });
 
   it('call lastLetter without any options will return a last letter uppercase string', function () {
+    expect(lastLetter('')).to.be.equal('');
     expect(lastLetter('last')).to.be.equal('t');
   });
   it('call lastLetter with some options', function () {
