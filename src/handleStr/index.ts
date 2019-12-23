@@ -3,7 +3,7 @@ export function firstLetter (str: string, option?: {
   include?: boolean;
 }): string {
   if (!str) return str;
-  const [ first, ...rest ] = str;
+  const [ first, ...rest ] = str.split('');
 
   if (!option || option.include === true) return first;
 
