@@ -1,7 +1,3 @@
-interface AnyObject {
-  [propsName: string]: any;
-}
-
 export interface IGeneratorFn extends GeneratorFunction {
   readonly [Symbol.toStringTag]: 'GeneratorFunction';
   (): IterableIterator<any>;
@@ -22,7 +18,7 @@ interface IsType {
   symbol: symbol;
   array: any[];
   arguments: IArguments;
-  object: AnyObject;
+  object: { [propsName: string]: any };
   regexp: RegExp;
   date: Date;
   function: Function;
