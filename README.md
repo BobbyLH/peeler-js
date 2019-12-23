@@ -37,6 +37,12 @@ get element type.
 ### getUA()
 handle userAgent.
 
+### firstLetter(str, [option])
+tackle the string's first letter.
+
+### lastLetter(str, [option])
+tackle the string's last letter.
+
 ### isType()
 judgement element type.
 

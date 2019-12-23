@@ -6,6 +6,7 @@ export { getCookie } from './getCookie';
 export { getTs } from './getTs';
 export { getType } from './getType';
 export { getUA } from './getUA';
+export { firstLetter, lastLetter } from './handleStr';
 export { isType } from './isType';
 export { listenKeyboard, clearKeyboardListener } from './listenKeyboard';
 export { Logger } from './logger';
