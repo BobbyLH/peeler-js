@@ -27,6 +27,7 @@ export class Logger {
     this.debug = config.debug || false;
     this.logLevel = +(config.logLevel && '' + logLevelSet[config.logLevel] || logLevelSet['error']);
     this.logPrefix = config.logPrefix || 'Peeler-Js';
+    this._logOptimize = this._logOptimize.bind(this);
   }
 
   /**
@@ -86,10 +87,10 @@ export class Logger {
    */
   private _logOptimize (msg: TlogMsg, method: 'log' | 'info' | 'warn' | 'error'): void {
     // eslint-disable-next-line no-console
-    const logger: Function = console[method] || console.log;
+    const logger: Function = console[method].bind(console) || console.log.bind(console);
     const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`;
     try {
-      if (typeof console.table === 'function' && (isType('object')(msg) || isType('array')(msg))) {
+      if (console.table && (isType('object')(msg) || isType('array')(msg))) {
         logger(prefix);
         console.table(msg);
         return;
