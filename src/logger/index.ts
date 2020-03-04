@@ -85,14 +85,16 @@ export class Logger {
    * @return {void}
    */
   private _logOptimize (msg: TlogMsg, method: 'log' | 'info' | 'warn' | 'error'): void {
+    // eslint-disable-next-line no-console
     const logger: Function = console[method] || console.log;
     const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`;
-
-    if ((isType('object')(msg) || isType('array')(msg)) && console.table) {
-      logger(prefix);
-      console.table(msg);
-      return;
-    }
+    try {
+      if (typeof console.table === 'function' && (isType('object')(msg) || isType('array')(msg))) {
+        logger(prefix);
+        console.table(msg);
+        return;
+      }
+    } catch (e) {}
 
     logger(prefix, msg);
   }
