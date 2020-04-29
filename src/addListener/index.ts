@@ -1,12 +1,3 @@
-interface EventReplenishment extends WindowEventMap, HTMLBodyElementEventMap, DocumentEventMap {
-  DOMContentLoaded: Event;
-  progress: any;
-  readystatechange: any;
-}
-
-type PickOne<T, K extends keyof T> = T[K]
-type AnyEventName = keyof EventReplenishment;
-type EventListenerCallback<T extends AnyEventName> = (e: PickOne<EventReplenishment, T>) => any;
 type DOMType = Window | Document | HTMLElement | Node | Element;
 
 interface ListenerOption {
@@ -15,23 +6,28 @@ interface ListenerOption {
   once?: boolean;
 }
 
+interface AddListener {
+  <K extends keyof WindowEventMap>(event: K, fn: (this: Window, ev: WindowEventMap[K]) => any, dom: DOMType, option?: ListenerOption): void;
+  (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType, option?: ListenerOption): void;
+}
+
 /**
  * @param {AnyEventName} event event name
  * @param {function} fn event callback
  * @param {object} dom event dom
  * @param {ListenerOption} option option contain captrue, passive, once
  */
-export const addListener = (function () {
-  if (typeof window === 'undefined') return function (): void {};
+export const addListener: AddListener = (function () {
+  if (typeof window === 'undefined') return function () {};
 
   if (!window.addEventListener) {
-    return function <T extends AnyEventName>(event: T, fn: EventListenerCallback<T>, dom: DOMType): void {
+    return function (event: any, fn: any, dom: DOMType) {
       const eventDOM: any = dom || window;
       eventDOM.attachEvent(`on${event}`, fn);
     };
   }
 
-  return function <T extends AnyEventName>(event: T, fn: EventListenerCallback<T>, dom: DOMType, option: ListenerOption = {}): void {
+  return function (event: any, fn: any, dom: DOMType, option: ListenerOption = {}) {
     const eventDOM = dom || window;
     const { capture = false, passive = false, once = false } = option;
 

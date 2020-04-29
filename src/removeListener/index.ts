@@ -4,10 +4,12 @@ interface EventReplenishment extends WindowEventMap, HTMLBodyElementEventMap, Do
   readystatechange: any;
 }
 
-type PickOne<T, K extends keyof T> = T[K]
-type AnyEventName = keyof EventReplenishment;
-type EventListenerCallback<T extends AnyEventName> = (e: PickOne<EventReplenishment, T>) => any;
 type DOMType = Window | Document | HTMLElement | Node | Element;
+
+interface RemoveListener {
+  <K extends keyof WindowEventMap>(event: K, fn: (this: Window, ev: WindowEventMap[K]) => any, dom: DOMType, useCapture?: boolean): void;
+  (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType, useCapture?: boolean): void;
+}
 
 /**
  * @param {string} event event name
@@ -15,17 +17,17 @@ type DOMType = Window | Document | HTMLElement | Node | Element;
  * @param {object} dom event dom
  * @param {boolean} useCapture bubble or capture
  */
-export const removeListener = (function () {
+export const removeListener: RemoveListener = (function () {
   if (typeof window === 'undefined') return function (): void {};
 
   if (!window.removeEventListener) {
-    return function <T extends AnyEventName>(event: string, fn: EventListenerCallback<T>, dom: DOMType): void {
+    return function (event: any, fn: any, dom: DOMType): void {
       const eventDOM: any = dom || window;
       eventDOM.detachEvent(`on${event}`, fn);
     };
   }
 
-  return function <T extends AnyEventName>(event: string, fn: EventListenerCallback<T>, dom: DOMType, useCapture: boolean = false): void {
+  return function (event: any, fn: any, dom: DOMType, useCapture: boolean = false): void {
     const eventDOM = dom || window;
     eventDOM.removeEventListener(event, fn as EventListenerOrEventListenerObject, useCapture);
   };
