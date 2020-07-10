@@ -1,6 +1,6 @@
 import 'mocha'
 import { expect } from 'chai'
-import listenKeyboard, { clearKeyboardListener } from '../'
+import { listenKeyboard, clearKeyboardListener } from '../'
 
 describe('listenKeyboard\'s test module', function () {
   it('listenKeyboard is a function', function () {

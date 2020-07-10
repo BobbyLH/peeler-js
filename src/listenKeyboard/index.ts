@@ -69,4 +69,7 @@ export function clearKeyboardListener (node: HTMLInputElement | HTMLTextAreaElem
   }
 }
 
-export default listenKeyboard;
+export default {
+  listenKeyboard,
+  clearKeyboardListener
+};
