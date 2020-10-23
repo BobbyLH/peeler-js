@@ -36,10 +36,14 @@ export class Logger {
    * 
    * @return {void}
    */
-  public log (detail: TlogMsg): void {
+  public detail (...detail: TlogMsg[]): void {
     const canLog: boolean = this.logLevel !== logLevelSet['silent'] && this.logLevel === logLevelSet['detail'];
 
-    this.debug && canLog && this._logOptimize(detail, 'log');
+    this.debug && canLog && this._logOptimize('log', ...detail);
+  }
+
+  public log (...detail: TlogMsg[]): void {
+    this.detail(...detail);
   }
 
   /**
@@ -48,10 +52,14 @@ export class Logger {
    * 
    * @return {void}
    */
-  public logInfo (info: TlogMsg): void {
+  public info (...info: TlogMsg[]): void {
     const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'] && this.logLevel !== logLevelSet['warn'];
 
-    this.debug && canLog && this._logOptimize(info, 'info');
+    this.debug && canLog && this._logOptimize('info', ...info);
+  }
+
+  public logInfo (...info: TlogMsg[]): void {
+    this.info(...info);
   }
 
   /**
@@ -60,10 +68,14 @@ export class Logger {
    * 
    * @return {void}
    */
-  public logWarn (warn: TlogMsg): void {
+  public warn (...warn: TlogMsg[]): void {
     const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'];
 
-    this.debug && canLog && this._logOptimize(warn, 'warn');
+    this.debug && canLog && this._logOptimize('warn', ...warn);
+  }
+
+  public logWarn (...warn: TlogMsg[]): void {
+    this.warn(...warn);
   }
 
   /**
@@ -72,10 +84,14 @@ export class Logger {
    * 
    * @return {void}
    */
-  public logErr (error: TlogMsg): void {
+  public error (...error: TlogMsg[]): void {
     const canLog = this.logLevel !== logLevelSet['silent'];
 
-    this.debug && canLog && this._logOptimize(error, 'error');
+    this.debug && canLog && this._logOptimize('error', ...error);
+  }
+
+  public logErr (...error: TlogMsg[]): void {
+    this.error(...error);
   }
 
   /**
@@ -85,19 +101,19 @@ export class Logger {
    * 
    * @return {void}
    */
-  private _logOptimize (msg: TlogMsg, method: 'log' | 'info' | 'warn' | 'error'): void {
+  private _logOptimize (method: 'log' | 'info' | 'warn' | 'error', ...msg: TlogMsg[]): void {
     // eslint-disable-next-line no-console
     const logger: Function = console[method].bind(console) || console.log.bind(console);
     const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`;
     try {
-      if (console.table && (isType('object')(msg) || isType('array')(msg))) {
+      if (msg.length === 1 && console.table && (isType('object')(msg[0]) || isType('array')(msg[0]))) {
         logger(prefix);
-        console.table(msg);
+        console.table(...msg);
         return;
       }
     } catch (e) {}
 
-    logger(prefix, msg);
+    logger(prefix, ...msg);
   }
 }
 
