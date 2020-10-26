@@ -2,7 +2,7 @@ import isType from '../isType';
 
 export type TlogLevel = number;
 export type TlogLevelStr = 'detail' | 'info' | 'warn' | 'error' | 'silent';
-export type TlogMsg = string | Record<string, any> | Array<any>;
+export type TlogMsg = number | string | Record<string, any> | Array<any>;
 
 export interface Config {
   debug?: boolean;
@@ -105,10 +105,11 @@ export class Logger {
     // eslint-disable-next-line no-console
     const logger: Function = console[method].bind(console) || console.log.bind(console);
     const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`;
+    const needTable = msg.some(v => isType('object')(v) || isType('array')(v));
     try {
-      if (msg.length === 1 && console.table && (isType('object')(msg[0]) || isType('array')(msg[0]))) {
+      if (console.table && needTable) {
         logger(prefix);
-        console.table(...msg);
+        console.table(msg);
         return;
       }
     } catch (e) {}
