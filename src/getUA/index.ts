@@ -1,16 +1,45 @@
 interface Iua {
-  [propsName: string]: boolean;
+  isAndroid: boolean;
+  isIOS: boolean;
+  isWindows: boolean;
+  isMac: boolean;
+  isIPad: boolean;
+  isMobile: boolean;
+  isWebKit: boolean;
+  isChrome: boolean;
+  isFirefox: boolean;
+  isGecko: boolean;
+  is360se: boolean;
+  isIE: boolean;
+  isEdge: boolean;
+  isOpera: boolean;
+  isSafari: boolean;
+  isUCBrowser: boolean;
+  isBaiduBrowser: boolean;
+  isSougouBrowser: boolean;
+  isLiebaoBrowser: boolean;
+  isWeixin: boolean;
+  isSinaWeibo: boolean;
+  isQQ: boolean;
+  isQQWeibo: boolean;
+  isFacebook: boolean;
+  isTwitter: boolean;
+  isInstagram: boolean;
+  isIphoneX: boolean;
+  isIPhoneXR: boolean;
+  isIPhoneXSMax: boolean;
 }
 
 /**
  * generation ua object accroding to navigator.userAgent
  * @param {string} u navigator.userAgent
- * @return {false | Iua} ua object
+ * @return {null | Record<string, boolean>} ua object
  */
-export function getUA(u: ''): false;
+
+export function getUA(u: ''): null;
 export function getUA(u: string): Iua;
-export function getUA(u: string): false | Iua {
-  if (!u) return false;
+export function getUA(u: string): null | Iua {
+  if (!u) return null;
 
   function check(pattern: RegExp): boolean {
     return (pattern).test(u);
@@ -48,7 +77,7 @@ export function getUA(u: string): false | Iua {
     return model;
   }
 
-  const UA: Iua = {
+  const UA = {
     isAndroid: check(/android|linux|adr/i),
     isIOS: check(/\(i[^;]+;( U;)? CPU.+Mac OS X/i),
     isWindows: check(/window/i),

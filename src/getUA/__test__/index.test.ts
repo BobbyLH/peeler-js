@@ -9,10 +9,12 @@ describe("getUA's test module", function () {
   const ua_web = getUA(webua)
   const ua_mob = getUA(mobua)
   const ua_mob_adr = getUA(mobua_adr)
+  const ua_null = getUA('')
   it('getUA return is an object', function () {
     expect(ua_web).to.be.an('object')
     expect(ua_mob).to.be.an('object')
     expect(ua_mob_adr).to.be.an('object')
+    expect(ua_null).to.be.equal(null)
   })
   it('different web with mobile', function () {
     expect(ua_web['isMobile']).to.be.false
