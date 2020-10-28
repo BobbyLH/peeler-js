@@ -30,6 +30,24 @@ export class Logger {
     this._logOptimize = this._logOptimize.bind(this);
   }
 
+  public setPrefix (prefix: string) {
+    if (typeof prefix === 'string') {
+      this.logPrefix = prefix;
+    }
+  }
+
+  public setLevel (level: TlogLevelStr) {
+    if (level && logLevelSet[level] !== void 0) {
+      this.logLevel = logLevelSet[level];
+    }
+  }
+
+  public setDebug (isDebug: boolean) {
+    if (typeof isDebug === 'boolean') {
+      this.debug = isDebug;
+    }
+  }
+
   /**
    * detail logger
    * @param {string | Record<string, any> | Array<any>} detail the log message
