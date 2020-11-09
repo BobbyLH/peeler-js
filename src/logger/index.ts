@@ -34,18 +34,24 @@ export class Logger {
     if (typeof prefix === 'string') {
       this.logPrefix = prefix;
     }
+
+    return this;
   }
 
   public setLevel (level: TlogLevelStr) {
     if (level && logLevelSet[level] !== void 0) {
       this.logLevel = logLevelSet[level];
     }
+
+    return this;
   }
 
   public setDebug (isDebug: boolean) {
     if (typeof isDebug === 'boolean') {
       this.debug = isDebug;
     }
+
+    return this;
   }
 
   /**
