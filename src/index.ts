@@ -3,6 +3,7 @@ export { clipboard } from './clipboard';
 export { compare } from './compare';
 export { compatCheck } from './compatCheck';
 export { getCookie } from './getCookie';
+export { getLocalDate } from './getLocalDate';
 export { getTs } from './getTs';
 export { getType } from './getType';
 export { getUA } from './getUA';

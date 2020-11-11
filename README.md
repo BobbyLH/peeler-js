@@ -28,6 +28,9 @@ compat check.
 ### getCookie()
 get cookie.
 
+### getLocalDate()
+get local date
+
 ### getTs()
 compat timestamp.
 

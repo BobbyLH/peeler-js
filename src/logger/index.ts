@@ -1,4 +1,5 @@
 import isType from '../isType';
+import getLocalDate from '../getLocalDate';
 
 export type TlogLevel = number;
 export type TlogLevelStr = 'detail' | 'info' | 'warn' | 'error' | 'silent';
@@ -25,7 +26,7 @@ export class Logger {
 
   public constructor (config: Config = {}) {
     this.debug = config.debug || false;
-    this.logLevel = +(config.logLevel && '' + logLevelSet[config.logLevel] || logLevelSet['error']);
+    this.logLevel = +(config.logLevel && '' + logLevelSet[config.logLevel] || logLevelSet['warn']);
     this.logPrefix = config.logPrefix || 'Peeler-Js';
     this._logOptimize = this._logOptimize.bind(this);
   }
@@ -128,17 +129,17 @@ export class Logger {
   private _logOptimize (method: 'log' | 'info' | 'warn' | 'error', ...msg: TlogMsg[]): void {
     // eslint-disable-next-line no-console
     const logger: Function = console[method].bind(console) || console.log.bind(console);
-    const prefix = `[${this.logPrefix} ${method.toUpperCase()}]:`;
+    const prefix = `${method.toUpperCase()} [${this.logPrefix}]`;
     const needTable = msg.some(v => isType('object')(v) || isType('array')(v));
     try {
       if (console.table && needTable) {
-        logger(prefix);
+        logger(`${prefix} (${getLocalDate()}):`);
         console.table(msg);
         return;
       }
     } catch (e) {}
 
-    logger(prefix, ...msg);
+    logger(`${prefix}:`, ...msg, `(${getLocalDate()})`);
   }
 }
 

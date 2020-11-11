@@ -35,7 +35,7 @@ describe("Logger's test module", function () {
   it('const logger_default = new Logger()', function () {
     expect(logger_default).to.be.an('object')
     expect(logger_default).to.have.property('debug').to.be.a('boolean').to.be.false
-    expect(logger_default).to.have.property('logLevel').to.be.a('number').to.be.equal(3)
+    expect(logger_default).to.have.property('logLevel').to.be.a('number').to.be.equal(2)
     expect(logger_default).to.have.property('logPrefix').to.be.a('string').to.be.equal('Peeler-Js')
     expect(logger_default).to.have.property('__proto__').to.be.an('object').to.be.equal(proto)
     expect(logger_default.log).to.be.an('function')
