@@ -32,7 +32,7 @@ export class Logger {
   }
 
   public setPrefix (prefix: string) {
-    if (typeof prefix === 'string') {
+    if (prefix && typeof prefix === 'string') {
       this.logPrefix = prefix;
     }
 
