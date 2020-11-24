@@ -141,7 +141,9 @@ export class Logger {
 
     msg = msg.map(m => {
       if (isType('object')(m) || isType('array')(m)) {
-        return JSON.stringify(m);
+        try {
+          return JSON.stringify(m);
+        } catch (e) {}
       }
       return m;
     });
