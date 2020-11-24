@@ -130,14 +130,21 @@ export class Logger {
     // eslint-disable-next-line no-console
     const logger: Function = console[method].bind(console) || console.log.bind(console);
     const prefix = `${method.toUpperCase()} [${this.logPrefix}]`;
-    const needTable = msg.some(v => isType('object')(v) || isType('array')(v));
+    const canTable = msg.every(v => isType('object')(v) || isType('array')(v));
     try {
-      if (console.table && needTable) {
+      if (console.table && canTable) {
         logger(`${prefix} (${getLocalDate()}):`);
         console.table(msg);
         return;
       }
     } catch (e) {}
+
+    msg = msg.map(m => {
+      if (isType('object')(m) || isType('array')(m)) {
+        return JSON.stringify(m);
+      }
+      return m;
+    });
 
     logger(`${prefix}:`, ...msg, `(${getLocalDate()})`);
   }
