@@ -12,26 +12,35 @@ export interface Config {
 }
 
 enum logLevelSet {
-  'detail', 
-  'info', 
-  'warn', 
-  'error', 
+  'detail',
+  'info',
+  'warn',
+  'error',
+  'success',
   'silent'
 }
+
+const colorPlates = {
+  log: 'color: #1f132b; background-color: #f0f0f0',
+  info: 'color: white; background-color: #2274A5',
+  warn: 'color: #494008; background-color: #e7c60c',
+  error: 'color: white; background-color: #D33F49',
+  success: 'color: white; background-color: #95B46A'
+};
 
 export class Logger {
   private debug: boolean | undefined;
   private logLevel: TlogLevel | undefined;
   private logPrefix: string | 'Peeler-Js';
 
-  public constructor (config: Config = {}) {
+  public constructor(config: Config = {}) {
     this.debug = config.debug || false;
     this.logLevel = +(config.logLevel && '' + logLevelSet[config.logLevel] || logLevelSet['warn']);
     this.logPrefix = config.logPrefix || 'Peeler-Js';
     this._logOptimize = this._logOptimize.bind(this);
   }
 
-  public setPrefix (prefix: string) {
+  public setPrefix(prefix: string) {
     if (prefix && typeof prefix === 'string') {
       this.logPrefix = prefix;
     }
@@ -39,7 +48,7 @@ export class Logger {
     return this;
   }
 
-  public setLevel (level: TlogLevelStr) {
+  public setLevel(level: TlogLevelStr) {
     if (level && logLevelSet[level] !== void 0) {
       this.logLevel = logLevelSet[level];
     }
@@ -47,7 +56,7 @@ export class Logger {
     return this;
   }
 
-  public setDebug (isDebug: boolean) {
+  public setDebug(isDebug: boolean) {
     if (typeof isDebug === 'boolean') {
       this.debug = isDebug;
     }
@@ -61,13 +70,13 @@ export class Logger {
    * 
    * @return {void}
    */
-  public detail (...detail: TlogMsg[]): void {
+  public detail(...detail: TlogMsg[]): void {
     const canLog: boolean = this.logLevel !== logLevelSet['silent'] && this.logLevel === logLevelSet['detail'];
 
     this.debug && canLog && this._logOptimize('log', ...detail);
   }
 
-  public log (...detail: TlogMsg[]): void {
+  public log(...detail: TlogMsg[]): void {
     this.detail(...detail);
   }
 
@@ -77,13 +86,13 @@ export class Logger {
    * 
    * @return {void}
    */
-  public info (...info: TlogMsg[]): void {
+  public info(...info: TlogMsg[]): void {
     const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'] && this.logLevel !== logLevelSet['warn'];
 
     this.debug && canLog && this._logOptimize('info', ...info);
   }
 
-  public logInfo (...info: TlogMsg[]): void {
+  public logInfo(...info: TlogMsg[]): void {
     this.info(...info);
   }
 
@@ -93,13 +102,13 @@ export class Logger {
    * 
    * @return {void}
    */
-  public warn (...warn: TlogMsg[]): void {
+  public warn(...warn: TlogMsg[]): void {
     const canLog = this.logLevel !== logLevelSet['silent'] && this.logLevel !== logLevelSet['error'];
 
     this.debug && canLog && this._logOptimize('warn', ...warn);
   }
 
-  public logWarn (...warn: TlogMsg[]): void {
+  public logWarn(...warn: TlogMsg[]): void {
     this.warn(...warn);
   }
 
@@ -109,14 +118,25 @@ export class Logger {
    * 
    * @return {void}
    */
-  public error (...error: TlogMsg[]): void {
+  public error(...error: TlogMsg[]): void {
     const canLog = this.logLevel !== logLevelSet['silent'];
 
     this.debug && canLog && this._logOptimize('error', ...error);
   }
 
-  public logErr (...error: TlogMsg[]): void {
+  public logErr(...error: TlogMsg[]): void {
     this.error(...error);
+  }
+
+  /**
+   * success logger
+   * @param {string | Record<string, any> | Array<any>} error the error log message
+   * 
+   * @return {void}
+   */
+  public success(...msg: TlogMsg[]): void {
+    const canLog = this.logLevel !== logLevelSet['silent'];
+    this.debug && canLog && this._logOptimize('success', ...msg);
   }
 
   /**
@@ -126,29 +146,29 @@ export class Logger {
    * 
    * @return {void}
    */
-  private _logOptimize (method: 'log' | 'info' | 'warn' | 'error', ...msg: TlogMsg[]): void {
+  private _logOptimize(method: 'log' | 'info' | 'warn' | 'error' | 'success', ...msg: TlogMsg[]): void {
     // eslint-disable-next-line no-console
-    const logger: Function = console[method].bind(console) || console.log.bind(console);
-    const prefix = `${method.toUpperCase()} [${this.logPrefix}]`;
+    const logger: Function = method === 'success' ? console.log.bind(console) : console[method].bind(console);
+    const prefix = `%c ${method.charAt(0).toUpperCase()}${method.slice(1)} `;
     const canTable = msg.every(v => isType('object')(v) || isType('array')(v));
     try {
       if (console.table && canTable) {
-        logger(`${prefix} (${getLocalDate()}):`);
+        logger(`${prefix}`, colorPlates[method], `[${this.logPrefix}] (${getLocalDate()}):`);
         console.table(msg);
         return;
       }
-    } catch (e) {}
+    } catch (e) { }
 
     msg = msg.map(m => {
       if (isType('object')(m) || isType('array')(m)) {
         try {
           return JSON.stringify(m);
-        } catch (e) {}
+        } catch (e) { }
       }
       return m;
     });
 
-    logger(`${prefix}:`, ...msg, `(${getLocalDate()})`);
+    logger(`${prefix}`, colorPlates[method], ':', ...msg, `(${getLocalDate()})`);
   }
 }
 

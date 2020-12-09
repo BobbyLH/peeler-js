@@ -2,7 +2,7 @@
  * 
  * @param {any} x The object which will compare with another(y)
  * @param {any} y The object which will compare with another(x)
- * @return {boolean}
+ * @return {boolean} whether or not x and y is equal
  */
 export function compare (x: any, y: any): boolean {
   let p: string;
