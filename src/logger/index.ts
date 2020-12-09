@@ -168,7 +168,7 @@ export class Logger {
       return m;
     });
 
-    logger(`${prefix}`, colorPlates[method], ':', ...msg, `(${getLocalDate()})`);
+    logger(`${prefix}`, colorPlates[method], `[${this.logPrefix}]:`, ...msg, `(${getLocalDate()})`);
   }
 }
 
