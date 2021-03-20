@@ -1,4 +1,4 @@
-interface IcacheItem {
+export interface IcacheItem {
   hash: string;
   host: string;
   hostname: string;
@@ -10,7 +10,7 @@ interface IcacheItem {
   search: string;
 }
 
-interface Icache {
+export interface Icache {
   [propName: string]: IcacheItem;
 } 
 

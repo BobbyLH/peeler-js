@@ -20,6 +20,7 @@ module.exports = {
 		"quotes": ["error", "single"],
 		"semi": ["error", "always"],
 		"no-extra-semi": ["warn"],
+		"prefer-rest-params": ["warn"],
 		"@typescript-eslint/camelcase": ["off"],
 		"@typescript-eslint/restrict-plus-operands": ["off"],
 		"@typescript-eslint/array-type": ["off"],
@@ -27,7 +28,8 @@ module.exports = {
 		"@typescript-eslint/no-angle-bracket-type-assertion": ["off"],
 		"@typescript-eslint/interface-name-prefix": ["off"],
 		"@typescript-eslint/explicit-function-return-type": ["off"],
-		"@typescript-eslint/no-explicit-any": ["off"]
+		"@typescript-eslint/no-explicit-any": ["off"],
+		"@typescript-eslint/no-empty-function": ["off"]
   },
   plugins: ["@typescript-eslint"],
   globals: {

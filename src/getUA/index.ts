@@ -1,4 +1,4 @@
-interface Iua {
+export interface Iua {
   isAndroid: boolean;
   isIOS: boolean;
   isWindows: boolean;

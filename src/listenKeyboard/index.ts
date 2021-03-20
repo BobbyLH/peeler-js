@@ -2,7 +2,7 @@ import addListener from '../addListener';
 import removeListener from '../removeListener';
 import getUA from '../getUA';
 
-type AnyFn = () => any;
+type AnyFn = (...rest: any[]) => any;
 type Listener = AnyFn | null;
 export interface ListenerCallBackParams {
   isIOS: boolean;

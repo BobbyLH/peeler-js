@@ -1,12 +1,12 @@
 type DOMType = Window | Document | HTMLElement | Node | Element;
 
-interface ListenerOption {
+export interface ListenerOption {
   capture?: boolean;
   passive?: boolean;
   once?: boolean;
 }
 
-interface AddListener {
+export interface AddListener {
   <K extends keyof WindowEventMap>(event: K, fn: (this: Window, ev: WindowEventMap[K]) => any, dom: DOMType, option?: ListenerOption): void;
   (event: string, fn: EventListenerOrEventListenerObject, dom: DOMType, option?: ListenerOption): void;
 }

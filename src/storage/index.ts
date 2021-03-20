@@ -1,38 +1,35 @@
-interface Ioption {
+export interface Ioption {
   domain?: string;
   path?: string;
   expires?: number;
   secure?: boolean;
 }
 
-type setFn = (key: string, value: any, option?: Ioption) => boolean
-type getFn = (key: string) => string | null
-type clearFn = (key: string, domain?: string) => boolean
-type storeType = 'cookie' | 'localStorage' | 'sessionStorage'
+export type setFn = (key: string, value: any, option?: Ioption) => boolean
+export type getFn = (key: string) => string | null
+export type clearFn = (key: string, domain?: string) => boolean
+export type storeType = 'cookie' | 'localStorage' | 'sessionStorage'
 
-interface IhandleStorage {
+export interface IhandleStorage {
   set: setFn;
   get: getFn;
   clear: clearFn;
 }
 
-interface Istorage {
-  sessionStorage: IhandleStorage;
-  localStorage: IhandleStorage;
-  cookie: IhandleStorage;
-  get: (key: string, storeType?: storeType) => string | null;
+export interface Istorage {
+  sessionStorage: IhandleStorage | null;
+  localStorage: IhandleStorage | null;
+  cookie: IhandleStorage | null;
+  get: (key: string, storeType?: storeType) => string | null | undefined;
   set: (key: string, value: string, storeType?: storeType, option?: Ioption) => boolean;
   clear: (key: string, storeType?: storeType, domain?: string) => boolean;
 }
 
-interface IinitStorage {
-  get: () => null;
-  set: () => boolean;
-  clear: () => boolean;
-}
-
-export const storage: Istorage | IinitStorage = (function () {
+export const storage: Istorage = (function () {
   if(typeof window === 'undefined') return {
+    sessionStorage: null,
+    localStorage: null,
+    cookie: null,
     get: () => null,
     set: () => false,
     clear: () => false
@@ -117,7 +114,7 @@ export const storage: Istorage | IinitStorage = (function () {
       set (key, val, option) {
         let res;
         try {
-          let { domain = '', path = '/', expires = 0, secure = false } = option || {};
+          const { domain = '', path = '/', expires = 0, secure = false } = option || {};
           let ts;
           if(expires >= 0){
             ts = new Date();
@@ -142,7 +139,7 @@ export const storage: Istorage | IinitStorage = (function () {
       },
       clear (key, domain) {
         document.cookie = `${key}="";${domain ? `domain=${domain};` : ''}max-age=-1`;
-        const res = handleStorage.cookie.get(key);
+        const res = handleStorage.cookie?.get(key);
 
         return !res;
       }
@@ -150,9 +147,9 @@ export const storage: Istorage | IinitStorage = (function () {
     get (key, storeType) {
       try {
         if (typeof storeType === 'string' && handleStorage[storeType]) {
-          return handleStorage[storeType].get(key);
+          return handleStorage[storeType]?.get(key);
         }
-        return this.cookie.get(key) || this.localStorage.get(key) || this.sessionStorage.get(key);
+        return this.cookie?.get(key) ?? this.localStorage?.get(key) ?? this.sessionStorage?.get(key);
       } catch (e) {
         return null;
       }
@@ -162,11 +159,11 @@ export const storage: Istorage | IinitStorage = (function () {
 
       try {
         if (typeof storeType === 'string' && handleStorage[storeType]) {
-          res = handleStorage[storeType].set(key, val, option);
+          res = handleStorage[storeType]?.set(key, val, option) ?? false;
         } else if (option) {
-          res = handleStorage.cookie.set(key, val, option);
+          res = handleStorage.cookie?.set(key, val, option) ?? false;
         } else {
-          res = handleStorage.localStorage.set(key, val);
+          res = handleStorage.localStorage?.set(key, val) ?? false;
         }
       } catch (e) {
         res = false;
@@ -179,11 +176,11 @@ export const storage: Istorage | IinitStorage = (function () {
 
       try {
         if (typeof storeType === 'string' && handleStorage[storeType]) {
-          res = handleStorage[storeType].clear(key, domain);
+          res = handleStorage[storeType]?.clear(key, domain) ?? false;
         } else if (domain) {
-          res = handleStorage.cookie.clear(key, domain);
+          res = handleStorage.cookie?.clear(key, domain) ?? false;
         } else {
-          res = handleStorage.localStorage.clear(key) && handleStorage.sessionStorage.clear(key);
+          res = (handleStorage.localStorage?.clear(key) && handleStorage.sessionStorage?.clear(key)) || false;
         }
       } catch (e) {
         res = false;

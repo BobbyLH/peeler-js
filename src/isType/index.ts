@@ -9,7 +9,7 @@ const gen = function *() {
 let args: IArguments;
 (function () { args = arguments; })();
 
-interface IsType {
+export interface IsType {
   string: string;
   number: number;
   boolean: boolean;
@@ -21,7 +21,7 @@ interface IsType {
   object: { [propsName: string]: any };
   regexp: RegExp;
   date: Date;
-  function: Function;
+  function: (...rest: any[]) => any;
   promise: Promise<void>;
   generatorfunction: GeneratorFunction;
   generator: Generator;

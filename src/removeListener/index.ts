@@ -27,7 +27,7 @@ export const removeListener: RemoveListener = (function () {
     };
   }
 
-  return function (event: any, fn: any, dom: DOMType, useCapture: boolean = false): void {
+  return function (event: any, fn: any, dom: DOMType, useCapture = false): void {
     const eventDOM = dom || window;
     eventDOM.removeEventListener(event, fn as EventListenerOrEventListenerObject, useCapture);
   };

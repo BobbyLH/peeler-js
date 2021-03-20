@@ -166,7 +166,7 @@ export class Logger {
   private _logOptimize(method: 'log' | 'info' | 'warn' | 'error' | 'success', ...msg: TlogMsg[]): void {
     const inBrowser = typeof window !== 'undefined';
     // eslint-disable-next-line no-console
-    const logger: Function = method === 'success' ? console.log.bind(console) : console[method].bind(console);
+    const logger = method === 'success' ? console.log.bind(console) : console[method].bind(console);
     const prefix = inBrowser ? [`%c ${method.charAt(0).toUpperCase()}${method.slice(1)} `, colorPlates[method]] : [`${nodeColorPlates.font[method]}${nodeColorPlates.bg[method]}%s\x1b[0m`, ` ${method.charAt(0).toUpperCase()}${method.slice(1)} `];
     const canTable = msg.every(v => isType('object')(v) || isType('array')(v));
     try {

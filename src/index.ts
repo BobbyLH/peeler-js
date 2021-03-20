@@ -20,3 +20,10 @@ export { storage } from './storage';
 export { rules } from './rules';
 export { timeslice } from './timeslice';
 export { uuid } from './uuid';
+
+export type { ListenerOption, AddListener } from './addListener';
+export type { Iua } from './getUA';
+export type { IsType } from './isType';
+export type { ListenerCallBackParams } from './listenKeyboard';
+export type { IcacheItem } from './parseUrl';
+export type { Istorage } from './storage';
