@@ -28,7 +28,11 @@ const regExpCollection = {
   date: /^\d{4}(\-|\/|\.)\d{1,2}\1\d{1,2}$/, // date
   letter: /^[A-Za-z]+$/, // letter
   letter_u: /^[A-Z]+$/, // uppercase
-  letter_l: /^[a-z]+$/ // lowercase
+  letter_l: /^[a-z]+$/, // lowercase
+  id_card_china_mainland: /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d| 3[01])\d{3}(\d|[xX])$/,
+  id_card_china_hk: /^((\s?[A-Za-z])|([A-Za-z]{2}))\d{6}(\([\dAa]\)|[0-9Aa])$/,
+  id_card_china_taiwan: /^[a-zA-Z][0-9]{9}$/,
+  id_card_china_macau: /^[1|5|7][0-9]{6}\([0-9Aa]\)/,
   /* eslint-enable no-useless-escape */
 };
 
@@ -43,22 +47,22 @@ function validate (regName: Exclude<keyof typeof regExpCollection, 'numeral'>) {
 
 export const rules = {
   phone_cn: validate('phone_cn'),
-  numeral: function (str: string | number, digit: number) {
+  numeral: function (str: string | number, digit: number): boolean {
     return regExpCollection.numeral(digit).test('' + str);
   },
-  number: function (str: string | number, sign?: 'p' | 'n') {
+  number: function (str: string | number, sign?: 'p' | 'n'): boolean {
     if (sign) {
       return sign === 'n' ? validate('numN')(str) : validate('numP')(str);
     }
     return validate('num')(str);
   },
-  integer: function (str: string | number, sign?: 'p' | 'n') {
+  integer: function (str: string | number, sign?: 'p' | 'n'): boolean {
     if (sign) {
       return sign === 'n' ? validate('integerN')(str) : validate('integerP')(str);
     }
     return validate('integer')(str);
   },
-  decimal: function (str: string | number, sign?: 'p' | 'n') {
+  decimal: function (str: string | number, sign?: 'p' | 'n'): boolean {
     if (sign) {
       return sign === 'n' ? validate('decimal2')(str) : validate('decimal1')(str);
     }
@@ -75,11 +79,15 @@ export const rules = {
   picture: validate('picture'),
   rar: validate('rar'),
   date: validate('date'),
-  letter: function (str: string | number, capital?: 'l' | 'u') {
+  letter: function (str: string | number, capital?: 'l' | 'u'): boolean {
     if (capital) {
       return capital === 'l' ? validate('letter_l')(str) : validate('letter_u')(str);
     }
     return validate('letter')(str);
+  },
+  id_card_cn: function (id: string | number, region: 'mainland' | 'hk' | 'taiwan' | 'macau' = 'mainland'): boolean {
+    const regName = `id_card_china_${region}` as 'id_card_china_mainland' | 'id_card_china_hk' | 'id_card_china_taiwan' | 'id_card_china_macau';
+    return validate(regName)(id);
   }
 };
 

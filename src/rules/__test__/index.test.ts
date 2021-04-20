@@ -18,7 +18,8 @@ const {
   picture,
   rar,
   date,
-  letter
+  letter,
+  id_card_cn
 } = rules
 
 describe("rules' test module", function () {
@@ -192,5 +193,38 @@ describe("rules' test module", function () {
     expect(letter('ABC', 'u')).to.be.true;
     expect(letter('aBC', 'u')).to.be.false;
     expect(letter('abc', 'u')).to.be.false;
+  });
+
+  it("id_card_cn's mainland test module", function () {
+    expect(id_card_cn(666.6)).to.be.false;
+    expect(id_card_cn('666.6')).to.be.false;
+    expect(id_card_cn('abc')).to.be.false;
+
+    expect(id_card_cn(500212199303212875)).to.be.true;
+    expect(id_card_cn('500212199303212875')).to.be.true;
+    expect(id_card_cn('50021219930321287X')).to.be.true;
+    expect(id_card_cn('50021219930321287x')).to.be.true;
+
+    expect(id_card_cn('500212169303212875')).to.be.false;
+    expect(id_card_cn('500212199313212875')).to.be.false;
+    expect(id_card_cn('500212199303512875')).to.be.false;
+    expect(id_card_cn('50021219930321287Y')).to.be.false;
+  });
+
+  it("id_card_cn's hk test module", function () {
+    expect(id_card_cn('F552773(7)', 'hk')).to.be.true;
+    expect(id_card_cn('Cv668648a', 'hk')).to.be.true;
+    expect(id_card_cn('C668668A', 'hk')).to.be.true;
+    expect(id_card_cn('C668668', 'hk')).to.be.false;
+  });
+
+  it("id_card_cn's taiwan test module", function () {
+    expect(id_card_cn('K183889052', 'taiwan')).to.be.true;
+    expect(id_card_cn('C668668', 'taiwan')).to.be.false;
+  });
+
+  it("id_card_cn's macau test module", function () {
+    expect(id_card_cn('1366234(6)', 'macau')).to.be.true;
+    expect(id_card_cn('1366234', 'macau')).to.be.false;
   });
 })
