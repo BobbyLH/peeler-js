@@ -77,8 +77,8 @@ async function createConfig () {
         typescript2({
           tsconfigOverride: {
             compilerOptions: {
-              target: 'es5',
-              module: 'es2015'
+              target: 'es2015',
+              module: 'ESNext'
             }
           },
           exclude: [ "**/__test__/*.test.ts" ]
@@ -98,7 +98,8 @@ async function createConfig () {
           resolve({ extensions }),
           commonjs(),
           typescript({
-            target: 'es5'
+            target: 'es5',
+            module: 'es2015'
           }),
           babel({
             exclude: 'node_modules/**',
@@ -118,8 +119,8 @@ async function createConfig () {
           resolve({ extensions }),
           commonjs(),
           typescript({
-            target: 'es5',
-            module: 'es2015'
+            target: 'es2015',
+            module: 'ESNext'
           })
         ]
       }]
